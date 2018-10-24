@@ -1,55 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TimerDisplay from './Display';
+import BtnDisplay from './BtnDisplay';
+import MarkDisplay from './MarkDisplay';
 import  './index.css';
 
-
-class Timer_display extends React.Component{
-	// Display stopclock count
-	render(){
-		return(
-		 <div className='time-display'>
-		  <h1>{`${this.props.min}m`}</h1>
-		  <h1>{`${this.props.sec}s`}</h1>
-		 </div>
-		);
-	}
-	
-}
-class Btn_display extends React.Component{
-	render(){
-		return(
-			<div className='btn-display'>
-			<button onClick={this.props.startClick}>
-			{this.props.start_name}
-			</button>
-			<button onClick={this.props.pauseClick}>
-			{this.props.pause_name}
-			</button>
-			<button onClick={this.props.remarkClick}>
-			 mark
-			</button>
-			</div>
-		);
-	}
-	
-}
-class Mark_display extends React.Component{
-	render(){
-		const items =this.props.list.map(
-			(item)=><li>{item}</li>
-		)
-		return(
-		  <ul>{items}</ul>
-		);
-	}
-}
-class App extends React.Component{
-	constructor(props){
-		super(props);
-		this.startClick = this.startClick.bind(this);
-		this.pauseClick = this.pauseClick.bind(this);
-		this.remarkClick = this.remarkClick.bind(this);
-		this.state ={
+// to set state to default
+const INITSTATE={
 			min:0,
 			sec:0,
 			msec:0,
@@ -57,6 +14,16 @@ class App extends React.Component{
 			mark:[],
 			timer_pause:false
 		};
+
+class App extends React.Component{
+	
+	
+	constructor(props){
+		super(props);
+		this.startClick = this.startClick.bind(this);
+		this.pauseClick = this.pauseClick.bind(this);
+		this.remarkClick = this.remarkClick.bind(this);
+		this.state = INITSTATE;// creating to recall timer chamges
 	}
 	// reset ticking Clock
 	resetClock(){
@@ -111,8 +78,11 @@ class App extends React.Component{
 			
 	}
 	remarkClick(){
-	  const item =`${this.state.min}min ${this.state.sec}sec`; 
-	  this.setState((state,props)=>{mark:state.mark.push(item)});
+	  if(this.state.timer){
+		  const item =`${this.state.min}min ${this.state.sec}sec`;   
+		  this.setState((state,props)=>{mark:state.mark.push(item)});
+	  
+	  }
 	}
 	componentDidMount() {
 
@@ -140,7 +110,7 @@ class App extends React.Component{
 		 <div className='app'>
 		 <h1>Stop watch</h1><hr/>
 		 <div className='content'>
-		 <Timer_display 
+		 <TimerDisplay 
 			 min={this.state.min} 
 			 
 			 sec={this.state.sec}
@@ -148,7 +118,7 @@ class App extends React.Component{
 			 msec={this.state.msec}
 		 />
 		 <div><hr/>
-		 <Btn_display 
+		 <BtnDisplay 
 		 start_name={(this.state.timer)?'stop':'start'}
 		 pause_name={(this.state.timer_pause)?'resume':'pause'}
 		 startClick={this.startClick} 
@@ -156,7 +126,7 @@ class App extends React.Component{
 		 remarkClick={this.remarkClick}
 		  />
 		  </div>
-		  <Mark_display list={this.state.mark} />
+		  <MarkDisplay list={this.state.mark} />
 		  </div>
 		 </div>
 		);
