@@ -17,6 +17,6 @@ class BtnDisplay extends React.Component{
 			</div>
 		);
 	}
-	
+
 }
 export default BtnDisplay;

@@ -11,6 +11,6 @@ class TimerDisplay extends React.Component{
 		 </div>
 		);
 	}
-	
+
 }
 export default TimerDisplay;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+// to display a list of clocked timers
 class MarkDisplay extends React.Component{
 	render(){
 		const items =this.props.list.map(
